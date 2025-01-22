@@ -16,7 +16,7 @@ module VagrantPlugins
           LOGGER.debug("WinRM password: #{machine.config.winrm.password.inspect}")
 
           if machine.config.winrm.password == :query_ec2 || machine.config.winrm.password == :query_ec2_retry
-            machine.ui.info("Looking up Windows password for instance #{machine.id}...") if machine.config.winrm.password != :query_ec2_retry
+            machine.ui.info("Waiting for Windows Administrator password to be published...") if machine.config.winrm.password != :query_ec2_retry
 
             aws_profile = machine.provider_config.aws_profile
             keypair_path = machine.provider_config.keypair_path
@@ -39,7 +39,7 @@ module VagrantPlugins
               machine.config.winrm.password = :query_ec2_retry
               raise Errors::WinRMNotReady
             else
-              machine.ui.info("Windows password found.")  
+              LOGGER.debug("Windows password found.")  
             end
           end
 
