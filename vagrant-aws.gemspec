@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "fog-aws", "~> 3.0"
   # pinned to be compatible with vagrant-vsphere version 1.13.5 and 1.14.0
-  s.add_runtime_dependency "nokogiri", "~> 1.10.0"
+  s.add_runtime_dependency "nokogiri", "~> 1.18.0"
   s.add_runtime_dependency "iniparse", "~> 1.4", ">= 1.4.2"
 
   s.add_development_dependency "rake"
