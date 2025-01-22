@@ -4,13 +4,13 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "vagrant-aws/version"
 
 Gem::Specification.new do |s|
-  s.name          = "vagrant-aws"
+  s.name          = "vagrant-aws-mscottford"
   s.version       = VagrantPlugins::AWS::VERSION
   s.platform      = Gem::Platform::RUBY
   s.license       = "MIT"
   s.authors       = "Mitchell Hashimoto"
   s.email         = "mitchell@hashicorp.com"
-  s.homepage      = "http://www.vagrantup.com"
+  s.homepage      = "https://github.com/mscottford/vagrant-aws-mscottford"
   s.summary       = "Enables Vagrant to manage machines in EC2 and VPC."
   s.description   = "Enables Vagrant to manage machines in EC2 and VPC."
 
