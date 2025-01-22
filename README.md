@@ -1,13 +1,16 @@
-# Vagrant AWS Provider
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/mitchellh/vagrant-aws?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Vagrant AWS Provider (mscottford fork)
 
-<span class="badges">
-[![Gem Version](https://badge.fury.io/rb/vagrant-aws.png)][gem]
-[![Dependency Status](https://gemnasium.com/mitchellh/vagrant-aws.png)][gemnasium]
-</span>
-
-[gem]: https://rubygems.org/gems/vagrant-aws
-[gemnasium]: https://gemnasium.com/mitchellh/vagrant-aws
+This is fork of the original [`vagrant-aws`](https://github.com/mitchellh/vagrant-aws) 
+plugin, which is no longer maintained. This fork includes the following changes
+over the original:
+  * All changes from the [rapid7 fork](https://github.com/rapid7/vagrant-aws)
+    are included.
+  * The plugin is now compatible with Vagrant 2.4.3 and Ruby 3.3.6. This is the
+    version that was used for testing.
+  * The plugin includes the ability to query AWS for the Windows Administrator
+    password when using the `winrm` communicator. This is done using the `aws`
+    CLI tool, which will need to be installed.
+  
 
 This is a [Vagrant](http://www.vagrantup.com) 1.2+ plugin that adds an [AWS](http://aws.amazon.com)
 provider to Vagrant, allowing Vagrant to control and provision machines in
@@ -49,7 +52,7 @@ manually within a `config.vm.provider` block. So first, add the dummy
 box using any name you want:
 
 ```
-$ vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
+$ vagrant box add dummy https://github.com/mscottford/vagrant-aws/raw/refs/heads/mscottford-custom/dummy.box
 ...
 ```
 
