@@ -13,6 +13,8 @@ module VagrantPlugins
           info[:host] = CommunicatorWinRM::Helper.winrm_address(machine)
           info[:port] = CommunicatorWinRM::Helper.winrm_port(machine, info[:host] == "127.0.0.1")
 
+          LOGGER.debug("WinRM password: #{machine.config.winrm.password.inspect}")
+
           if machine.config.winrm.password == :query_ec2 || machine.config.winrm.password == :query_ec2_retry
             machine.ui.info("Looking up Windows password for instance #{machine.id}...") if machine.config.winrm.password != :query_ec2_retry
 
@@ -24,11 +26,15 @@ module VagrantPlugins
               command += " --profile #{aws_profile}"
             end
 
+            LOGGER.debug("Executing: #{command}")
             response = JSON.parse(`#{command}`)
+            LOGGER.debug("Response: #{response.inspect}")
+
             machine.config.winrm.password = response["PasswordData"]
+            LOGGER.debug("Windows password from response: #{machine.config.winrm.password.inspect}")
 
             if machine.config.winrm.password.nil? || machine.config.winrm.password.empty?
-              machine.ui.debug("Windows password not available yet. Retrying after 30 seconds...")
+              LOGGER.debug("Windows password not available yet. Retrying after 30 seconds...")
               sleep(30)
               machine.config.winrm.password = :query_ec2_retry
               raise Errors::WinRMNotReady
