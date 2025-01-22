@@ -35,7 +35,10 @@ installing, `vagrant up` and specify the `aws` provider. An example is
 shown below.
 
 ```
-$ vagrant plugin install vagrant-aws
+# Uninstall the original plugin
+$ vagrant plugin uninstall vagrant-aws
+# Install the mscottford fork
+$ vagrant plugin install vagrant-aws-mscottford --entry-point vagrant-aws
 ...
 $ vagrant up --provider=aws
 ...
