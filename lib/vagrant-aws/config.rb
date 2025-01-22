@@ -45,6 +45,11 @@ module VagrantPlugins
       # @return [String]
       attr_accessor :keypair_name
 
+      # The path to the keypair to use.
+      #
+      # @return [String]
+      attr_accessor :keypair_path
+
       # The private IP address to give this machine (VPC).
       #
       # @return [String]
@@ -205,6 +210,7 @@ module VagrantPlugins
         @instance_package_timeout  = UNSET_VALUE
         @instance_type             = UNSET_VALUE
         @keypair_name              = UNSET_VALUE
+        @keypair_path              = UNSET_VALUE
         @private_ip_address        = UNSET_VALUE
         @region                    = UNSET_VALUE
         @endpoint                  = UNSET_VALUE
@@ -325,9 +331,6 @@ module VagrantPlugins
           @aws_dir = ENV['HOME'].to_s + '/.aws/' if @aws_dir == UNSET_VALUE
           @region, @access_key_id, @secret_access_key, @session_token = Credentials.new.get_aws_info(@aws_profile, @aws_dir)
           @region = UNSET_VALUE if @region.nil?
-        else
-          @aws_profile = nil
-          @aws_dir = nil
         end
 
         # session token must be set to nil, empty string isn't enough!
@@ -350,6 +353,16 @@ module VagrantPlugins
 
         # Keypair defaults to nil
         @keypair_name = nil if @keypair_name == UNSET_VALUE
+
+        # If 'keypair_name' is set, then keypair path defaults to similarly 
+        # named file in user's .ssh directory. Otherwise it defaults to nil.
+        if @keypair_path == UNSET_VALUE
+          if keypair_name.nil?
+            @keypair_path = nil
+          else
+            @keypair_path = "#{Dir.home}/.ssh/#{@keypair_name}.pem"
+          end
+        end
 
         # Default the private IP to nil since VPC is not default
         @private_ip_address = nil if @private_ip_address == UNSET_VALUE
